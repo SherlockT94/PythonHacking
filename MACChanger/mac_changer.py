@@ -21,7 +21,7 @@ def changeMAC(interface, newMAC):
 
 def getCurrentMAC(interface):
     ifResult = subprocess.check_output(["ifconfig", interface])
-    extractMAC = re.search(r"\w\w:\w\w:\w\w:\w\w:\w\w:\w\w", ifResult)
+    extractMAC = re.search(r"\w\w:\w\w:\w\w:\w\w:\w\w:\w\w", str(ifResult))
     if extractMAC:
         return extractMAC.group(0)
     else:
