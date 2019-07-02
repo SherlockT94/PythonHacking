@@ -4,7 +4,7 @@ import re
 
 def getArguments(): 
     parser = argparse.ArgumentParser() 
-    parser.add_argument("-i", "--interface", dest="interface", help="Interfacef to change its MAC address") 
+    parser.add_argument("-i", "--interface", dest="interface", help="Interface to change its MAC address") 
     parser.add_argument("-m", "--mac", dest="newMAC", help="New MAC Address")
     args = parser.parse_args()
     if not args.interface:
@@ -16,7 +16,7 @@ def getArguments():
 def changeMAC(interface, newMAC):
     print("[+] Changing MAC address for " + interface + " to " + newMAC)
     subprocess.call(["ifconfig", interface, "down"])#for security reason, use + to concatenate String may cause code injection
-    subprocess.call(["ifconfig", interface, "hw", "ether", newMAC])
+    subprocess.call(["ifconfig", interface, "hw", "ether", newMAC])#hw for hardware
     subprocess.call(["ifconfig", interface, "up"])
 
 def getCurrentMAC(interface):
