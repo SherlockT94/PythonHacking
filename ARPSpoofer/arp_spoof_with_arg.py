@@ -12,9 +12,9 @@ def get_arguments():
 
 def get_mac(ip):
     arp_request = scapy.ARP(pdst=ip)
-    broadcast = scapy.Ether(dst="ff:ff:ff:ff:ff:ff")#ff:ff:ff:ff:ff:ff is the broadcast MAC add    ress(None)
+    broadcast = scapy.Ether(dst="ff:ff:ff:ff:ff:ff")#ff:ff:ff:ff:ff:ff is the broadcast MAC address(None)
     arp_request_broadcast = broadcast/arp_request#combine them together
-    answered_list = scapy.srp(arp_request_broadcast, timeout=1, verbose=False)[0]#srp -> sent n recieve packag    e with a custom ether part, return two list with answered(index 0) and unanwered response
+    answered_list = scapy.srp(arp_request_broadcast, timeout=1, verbose=False)[0]#srp -> sent n recieve package with a custom ether part, return two list with answered(index 0) and unanwered response
 
     return answered_list[0][1].hwsrc
     
@@ -43,7 +43,7 @@ try:
         #print("[+] Packets sent:" + str(sent_packets_count)),#print at the same line in the buffer -> will be printed until program quit(not work here? becasue it is just work in python2)
         #sys.stdout.flush()#print instantly
         print("\r[+] Packets sent:" + str(sent_packets_count), end="")#end="" is the way to print in the same line in python3, \r mean print at start of the line
-        sys.stdout.flush()
+        sys.stdout.flush()#print immediately, not in the buffer
         time.sleep(2)#pause 2 seconds
 except KeyboardInterrupt:
     print()
