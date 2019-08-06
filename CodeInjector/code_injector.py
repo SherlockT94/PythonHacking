@@ -18,7 +18,7 @@ def process_packet(packet):
         load = scapy_packet[scapy.Raw].load
         if scapy_packet[scapy.TCP].dport == 80:
             print("[+] Request")
-            load = re.sub("Accept-Encoding:.*?\\r\\n", "", load)
+            load = re.sub("Accept-Encoding:.*?\\r\\n", "", load)#delete Accept-Encoding field to let the server     send response in plain text
 
         elif scapy_packet[scapy.TCP].sport == 80:
             print("[+] Response")
