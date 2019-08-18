@@ -1,3 +1,4 @@
+# This script is used to find possible subdomains and directories and files in a website via guessing using a list of possible options
 import requests
 
 def request(url):
@@ -16,6 +17,7 @@ target_url = "10.0.2.6/mutillidae"
         # response = request(test_url)
         # if response:
             # print("[+] Discovered subdomain --> " + test_url)
+
 # Discover directories/fils
 with open("/root/PythonHacking/WebApplicationHacking/files-and-dirs-wordlist.txt", "r") as wordlist_file:
     for line in wordlist_file:

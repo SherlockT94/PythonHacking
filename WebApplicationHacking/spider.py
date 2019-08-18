@@ -13,6 +13,7 @@ def extract_link_from(url):
     response = requests.get(target_url)
     return re.findall('(?:href=")(.*?)"', response.content.decode())
 
+# When discover a link, it will go into the link utill there is no more to go
 def crawl(url):
     href_links = extract_link_from(url)
     for link in href_links:
@@ -20,8 +21,8 @@ def crawl(url):
         if "#" in link:
             link = link.split("#")[0]
         if target_url in link and link not in target_links:
-            target_links.append(link)
+            target_links.append(link)# append() will searching the global namespace, so no need to using global keyword
             print(link)
-            crawl(link)
+            crawl(link)# call it self
 
 crawl(target_url)
